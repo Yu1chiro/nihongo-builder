@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Bahasa Jepang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center min-h-screen p-4">
+    <div class="text-center max-w-4xl w-full">
+        <h1 class="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+            Pilih Level Pembelajaran
+        </h1>
+        <p class="text-lg text-gray-600 mb-12">Pilih level sesuai kemampuanmu dan mulai tantangan!</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Level 1 Card -->
+            <a href="/quiz?level=1" class="group relative overflow-hidden level-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="relative z-10 p-8">
+                    <div class="w-20 h-20 mb-6 mx-auto flex items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-3xl font-bold shadow-md">
+                        1
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">第１課</h2>
+                    <p class="text-gray-600 mb-4">Level Pemula</p>
+                    <div class="h-1 w-16 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto mb-4 rounded-full"></div>
+                    <p class="text-sm text-gray-500">Kalimat sederhana dan kosakata dasar</p>
+                </div>
+                <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </a>
+
+            <!-- Level 2 Card -->
+            <a href="/quiz?level=2" class="group relative overflow-hidden level-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-100 to-pink-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="relative z-10 p-8">
+                    <div class="w-20 h-20 mb-6 mx-auto flex items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white text-3xl font-bold shadow-md">
+                        2
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">第２課</h2>
+                    <p class="text-gray-600 mb-4">Level Menengah</p>
+                    <div class="h-1 w-16 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto mb-4 rounded-full"></div>
+                    <p class="text-sm text-gray-500">Kalimat lebih kompleks dengan konjugasi</p>
+                </div>
+                <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </a>
+
+            <!-- Level 3 Card -->
+            <a href="/quiz?level=3" class="group relative overflow-hidden level-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                <div class="absolute inset-0 bg-gradient-to-br from-pink-100 to-red-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="relative z-10 p-8">
+                    <div class="w-20 h-20 mb-6 mx-auto flex items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-red-500 text-white text-3xl font-bold shadow-md">
+                        3
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">第３課</h2>
+                    <p class="text-gray-600 mb-4">Level Lanjutan</p>
+                    <div class="h-1 w-16 bg-gradient-to-r from-pink-400 to-red-400 mx-auto mb-4 rounded-full"></div>
+                    <p class="text-sm text-gray-500">Kalimat kompleks dengan partikel lanjutan</p>
+                </div>
+                <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-500 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </a>
+        </div>
+
+        <div class="mt-12 text-gray-500">
+            <p class="text-sm">Pilih level sesuai kemampuanmu. Kamu bisa mencoba level yang lebih tinggi setelah menyelesaikan level sebelumnya!</p>
+        </div>
+    </div>
+</body>
+</html>

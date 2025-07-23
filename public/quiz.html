@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mulai Kuis!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        /* Only essential custom animations and interactions */
+        .bubble {
+            position: absolute;
+            z-index: 1;
+            transition: transform 0.2s ease, opacity 0.3s ease;
+        }
+
+        #timer-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        #big-timer {
+            font-family: 'Segment7Standard', monospace;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .animate-pulse {
+            animation: pulse 1s infinite;
+        }
+
+        .bubble:active {
+            transform: scale(0.9);
+        }
+
+        .bubble.clicked {
+            opacity: 0;
+            transform: scale(0.5);
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            from {
+                top: -80px;
+            }
+
+            to {
+                top: 110vh;
+            }
+        }
+
+        .falling {
+            animation: fall linear forwards;
+        }
+
+        @keyframes pop-in {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            80% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .answer-block {
+            animation: pop-in 0.3s ease-out forwards;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-5px);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(5px);
+            }
+        }
+
+        .shake-error {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* SortableJS styles */
+        .sortable-ghost {
+            background-color: #a7f3d0 !important;
+        }
+
+        .sortable-drag {
+            opacity: 0.7 !important;
+        }
+
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            /* atau tinggi yang sesuai */
+            overflow: hidden;
+        }
+
+        .bubble-card {
+            touch-action: manipulation;
+            position: absolute;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+        }
+
+        /* Custom scrollbar for answer area */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 3px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body class="h-screen flex flex-col bg-gradient-to-br from-blue-50 to-cyan-50 select-none touch-pan-y">
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-sm shadow-md p-3 z-20 sticky top-0">
+        <div class="container mx-auto flex justify-between items-center gap-2">
+            <div class="min-w-0 flex-1">
+                <h1 id="level-title" class="text-lg font-bold text-sky-800 truncate">Level 1</h1>
+                <p id="question-counter" class="text-xs text-gray-600">Soal 1 / 5</p>
+            </div>
+
+            <!-- Timer -->
+            <div class="hidden bg-gradient-to-r from-blue-500 to-cyan-600 text-white font-mono rounded-lg px-4 py-2 text-xl min-w-[80px] text-center shadow-md"
+                id="timer">02:00</div>
+
+            <!-- Button group -->
+            <div class="flex gap-2">
+                <button id="clue-btn"
+                    class="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-white font-bold p-3 rounded-full shadow-lg active:scale-90 transition-transform">💡</button>
+                <button id="reset-btn"
+                    class="hidden bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold p-3 rounded-full shadow-lg active:scale-90 transition-transform">🔄</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main game area -->
+    <main id="game-container" class="flex-1 overflow-y-auto p-4 relative bg-gradient-to-r from-blue-800 to-indigo-900">
+    </main>
+
+    <!-- Timer Section (hidden by default) -->
+    <div id="timer-section" class="hidden flex-1 flex flex-col items-center justify-center bg-gray-900 p-4">
+        <div id="big-timer" class="text-white text-8xl font-bold mb-8">02:00</div>
+        <div class="w-full max-w-2xl bg-gray-800 rounded-lg">
+            <div id="answer-area"
+                class="bg-gray-50 justify-center rounded-xl flex flex-wrap items-center p-3 gap-2 custom-scrollbar overflow-y-auto w-full max-w-2xl">
+            </div>
+        </div>
+        <div class="flex gap-4 mt-6">
+            <button id="check-answer-btn"
+                class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold p-3 rounded-lg shadow-lg active:scale-90 transition-transform text-xl">Check
+                Answer</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // === DOM Elements ===
+            const gameContainer = document.getElementById('game-container');
+            const answerArea = document.getElementById('answer-area');
+            const levelTitle = document.getElementById('level-title');
+            const questionCounter = document.getElementById('question-counter');
+            const timerDisplay = document.getElementById('timer');
+            const bigTimerDisplay = document.getElementById('big-timer');
+            const clueBtn = document.getElementById('clue-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const checkAnswerBtn = document.getElementById('check-answer-btn');
+            const timerSection = document.getElementById('timer-section');
+
+            // === Game State ===
+            let currentLevel = 1,
+                currentQuestionIndex = 0;
+            let quizData = {};
+            let userAnswer = [];
+            let activeBubbles = [];
+            let timerInterval, bubbleGeneratorInterval;
+            let scoreSummary = [];
+            let fallenBubblesCount = 0,
+                isGameOver = false;
+            let timeLeft = 60; // Atur Timer Pertama
+            const params = new URLSearchParams(window.location.search);
+            const level = params.get('level');
+
+            // === Inisialisasi Drag-and-Drop ===
+            function initializeDragAndDrop() {
+                new Sortable(answerArea, {
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    dragClass: 'sortable-drag',
+                    onEnd: () => {
+                        const newAnswerOrder = [];
+                        answerArea.querySelectorAll('.answer-block').forEach(block => {
+                            newAnswerOrder.push(block.textContent);
+                        });
+                        userAnswer = newAnswerOrder;
+                    }
+                });
+            }
+
+            // === Fisher-Yates Shuffle Algorithm ===
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            // === Fetch Data and Start Game ===
+            async function initializeGame() {
+                try {
+                    const response = await fetch('/data/questions.json');
+                    quizData = await response.json();
+                    const urlParams = new URLSearchParams(window.location.search);
+                    currentLevel = parseInt(urlParams.get('level')) || 1;
+                    initializeDragAndDrop();
+                    loadQuestion();
+                } catch (error) {
+                    Swal.fire('Error', 'Gagal memuat data kuis.', 'error');
+                }
+            }
+
+            // === Load and Display Question ===
+            function loadQuestion(skipAnimation = false) {
+    if (!quizData[`level${currentLevel}`] || currentQuestionIndex >= quizData[`level${currentLevel}`].length) {
+        endGame();
+        return;
+    }
+
+    resetBoard();
+    const question = quizData[`level${currentLevel}`][currentQuestionIndex];
+    const fragments = shuffleArray([...question.fragments]);
+
+    levelTitle.textContent = `Level ${currentLevel}`;
+    questionCounter.textContent = `Soal ${currentQuestionIndex + 1} / ${quizData[`level${currentLevel}`].length}`;
+
+    const containerWidth = gameContainer.offsetWidth;
+    const containerHeight = gameContainer.offsetHeight;
+    const centerX = containerWidth / 2;
+    const centerY = containerHeight / 2;
+    const totalFragments = fragments.length;
+    let loadedFragments = 0;
+
+    gameContainer.style.display = 'block';
+    timerSection.classList.add('hidden');
+    answerArea.innerHTML = '';
+
+    const positions = [];
+    const radius = Math.min(containerWidth, containerHeight) * 0.35;
+
+    for (let i = 0; i < totalFragments; i++) {
+        const angle = (i * (2 * Math.PI / totalFragments)) + (Math.random() * 0.5 - 0.25);
+        const x = radius * Math.cos(angle);
+        const y = radius * Math.sin(angle);
+        positions.push({
+            x,
+            y,
+            rotation: Math.random() * 40 - 20
+        });
+    }
+
+    shuffleArray(positions);
+
+    fragments.forEach((fragment, index) => {
+        const bubble = document.createElement('div');
+        bubble.textContent = fragment;
+        bubble.className = 'bubble-card absolute bg-gradient-to-r from-fuchsia-600 to-purple-600 text-white px-4 py-3 rounded-md shadow-lg text-3xl font-semibold';
+
+        bubble.style.position = 'absolute';
+        bubble.style.left = '50%';
+        bubble.style.top = '50%';
+        bubble.style.transform = 'translate(-50%, -50%)';
+        bubble.style.opacity = '0';
+        bubble.style.zIndex = '10';
+
+        gameContainer.appendChild(bubble);
+        bubble.offsetHeight;
+
+        if (skipAnimation) {
+            // Skip animation, langsung tampilkan di answer area
+            const answerBlock = document.createElement('div');
+            answerBlock.textContent = fragment;
+            answerBlock.className = 'answer-block bg-gradient-to-r from-indigo-500 to-blue-500 p-3 text-white text-xl rounded-md font-bold cursor-move';
+            answerArea.appendChild(answerBlock);
+            userAnswer.push(fragment);
+            bubble.remove();
+
+            loadedFragments++;
+
+            if (loadedFragments === totalFragments) {
+                gameContainer.style.display = 'none';
+                timerSection.classList.remove('hidden');
+                startTimer(timeLeft);
+            }
+        } else {
+            // Dengan animasi seperti biasa
+            setTimeout(() => {
+                const pos = positions[index];
+                gsap.to(bubble, {
+                    duration: 0.6,
+                    opacity: 1,
+                    x: pos.x,
+                    y: pos.y,
+                    rotate: pos.rotation,
+                    scale: 1,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        const answerBlock = document.createElement('div');
+                        answerBlock.textContent = fragment;
+                        answerBlock.className = 'answer-block bg-gradient-to-r from-indigo-500 to-blue-500 p-3 text-white text-xl rounded-md font-bold cursor-move';
+                        answerArea.appendChild(answerBlock);
+                        userAnswer.push(fragment);
+                        bubble.remove();
+
+                        loadedFragments++;
+
+                        if (loadedFragments === totalFragments) {
+                            gameContainer.style.display = 'none';
+                            timerSection.classList.remove('hidden');
+                            startTimer(timeLeft);
+                        }
+                    }
+                });
+            }, index * 300);
+        }
+    });
+
+    checkAnswerBtn.disabled = false;
+}
+            function startTimer(duration) {
+                let time = duration;
+                clearInterval(timerInterval);
+
+                function updateTimer() {
+                    let minutes = Math.floor(time / 60);
+                    let seconds = time % 60;
+                    minutes = minutes < 10 ? '0' + minutes : minutes;
+                    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                    // Update both timer displays
+                    timerDisplay.textContent = `${minutes}:${seconds}`;
+                    bigTimerDisplay.textContent = `${minutes}:${seconds}`;
+
+                    // Animation for low time
+                    if (time <= 10) {
+                        bigTimerDisplay.classList.add('text-red-500', 'animate-pulse');
+                        timerDisplay.classList.add('text-red-500', 'animate-pulse');
+                    } else {
+                        bigTimerDisplay.classList.remove('text-red-500', 'animate-pulse');
+                        timerDisplay.classList.remove('text-red-500', 'animate-pulse');
+                    }
+
+                    if (--time < 0) {
+                        clearInterval(timerInterval);
+                        isGameOver = true;
+                        Swal.fire({
+                            title: 'Waktu Habis!',
+                            text: 'Waktu untuk menjawab telah berakhir',
+                            icon: 'error',
+                            heightAuto: false,
+                            confirmButtonText: 'Coba Lagi'
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    }
+
+                    timeLeft = time; // Update global timeLeft
+                }
+
+                // Initial update
+                updateTimer();
+
+                // Set interval
+                timerInterval = setInterval(updateTimer, 1000);
+            }
+
+            // === Handle User Interaction ===
+            function handleBubbleClick(event) {
+                const clickedBubble = event.target;
+                if (clickedBubble.classList.contains('clicked') || isGameOver) return;
+
+                clickedBubble.classList.add('clicked');
+
+                const answerBlock = document.createElement('div');
+                answerBlock.textContent = clickedBubble.dataset.text;
+                answerBlock.className =
+                    'answer-block bg-gradient-to-r from-indigo-500 to-blue-500 p-3 text-white text-xl rounded-md font-bold';
+                answerArea.appendChild(answerBlock);
+                userAnswer.push(clickedBubble.dataset.text);
+
+                const question = quizData[`level${currentLevel}`][currentQuestionIndex];
+                if (userAnswer.length === question.fragments.length) {
+                    checkAnswerBtn.disabled = false;
+                    clearInterval(bubbleGeneratorInterval);
+                }
+            }
+
+            function handleBubbleFallEnd(event) {
+                if (isGameOver) return;
+
+                if (!event.target.classList.contains('clicked')) {
+                    fallenBubblesCount++;
+                }
+
+                const totalBubbles = quizData[`level${currentLevel}`][currentQuestionIndex].fragments.length;
+
+                if (fallenBubblesCount >= totalBubbles && userAnswer.length === 0) {
+                    isGameOver = true;
+                    clearInterval(timerInterval);
+                    clearInterval(bubbleGeneratorInterval);
+
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: 'Semua bubble telah habis. Coba lagi.',
+                        icon: 'warning',
+                        confirmButtonText: 'OK',
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                }
+            }
+
+            // === Check the Answer ===
+        function checkAnswer() {
+    if (isGameOver) return;
+    isGameOver = true;
+    clearInterval(timerInterval);
+
+    const question = quizData[`level${currentLevel}`][currentQuestionIndex];
+    const correctSequence = question.correctOrder.map(index => question.fragments[index]);
+    const isCorrect = JSON.stringify(userAnswer) === JSON.stringify(correctSequence);
+
+    scoreSummary.push({
+        level: currentLevel,
+        question: question.fragments.join(' '),
+        userAnswer: userAnswer.join(' '),
+        correctAnswer: correctSequence.join(' '),
+        isCorrect: isCorrect
+    });
+
+    if (isCorrect) {
+        Swal.fire({
+            title: 'Benar!',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false,
+            heightAuto: false
+        }).then(() => {
+            currentQuestionIndex++;
+            isGameOver = false;
+            loadQuestion(); // Dengan animasi untuk pertanyaan baru
+        });
+    } else {
+        answerArea.classList.add('shake-error');
+        setTimeout(() => {
+            answerArea.classList.remove('shake-error');
+        }, 500);
+        Swal.fire({
+            title: 'Kurang Tepat',
+            text: 'Urutan kalimatmu salah.',
+            icon: 'error',
+            heightAuto: false,
+            confirmButtonText: 'Ulangi'
+        }).then(() => {
+            isGameOver = false;
+            resetCurrentAttempt();
+            loadQuestion(true); // Tanpa animasi untuk mengulang pertanyaan yang sama
+        });
+    }
+}
+// === Game Controls ===
+            function resetBoard() {
+                clearInterval(timerInterval);
+                clearInterval(bubbleGeneratorInterval);
+                userAnswer = [];
+                answerArea.innerHTML = '';
+                activeBubbles.forEach(b => b.remove());
+                activeBubbles = [];
+                fallenBubblesCount = 0;
+                isGameOver = false;
+                checkAnswerBtn.disabled = true;
+                timeLeft = 60; // Atur Timer Reset
+            }
+
+         function resetCurrentAttempt() {
+    userAnswer = [];
+    answerArea.innerHTML = '';
+    activeBubbles.forEach(b => b.remove());
+    activeBubbles = [];
+    fallenBubblesCount = 0;
+    isGameOver = false;
+    checkAnswerBtn.disabled = true;
+    timeLeft = 60; // Reset timer
+    startTimer(timeLeft);
+}
+            // === Event Listeners ===
+            clueBtn.addEventListener('click', () => {
+                if (isGameOver) return;
+                const question = quizData[`level${currentLevel}`][currentQuestionIndex];
+                Swal.fire({
+                    title: 'Petunjuk',
+                    text: question.clue,
+                    icon: 'info',
+                    heightAuto: false
+                });
+            });
+
+            resetBtn.addEventListener('click', () => {
+                if (isGameOver) return;
+                resetCurrentAttempt();
+            });
+
+            checkAnswerBtn.addEventListener('click', checkAnswer);
+
+            // === End Game Summary ===
+            function endGame() {
+                const totalQuestions = scoreSummary.length;
+                const correctAnswers = scoreSummary.filter(s => s.isCorrect).length;
+                const score = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
+                let summaryHTML =
+                    `<div class="text-left text-sm max-h-60 overflow-y-auto"><p class="mb-4 text-center text-base">Skor Akhir: <strong>${score.toFixed(0)}%</strong> (${correctAnswers}/${totalQuestions} benar)</p><h3 class="font-bold mb-2 text-center">Detail Jawaban Salah:</h3>`;
+                const incorrect = scoreSummary.filter(s => !s.isCorrect);
+                if (incorrect.length === 0) {
+                    summaryHTML +=
+                        '<p class="text-center text-green-600">Luar biasa! Semua jawabanmu benar!</p>';
+                } else {
+                    incorrect.forEach(item => {
+                        summaryHTML +=
+                            `<div class="mb-3 p-2 border rounded-md bg-red-50"><p class="text-red-700"><strong class="font-semibold">Jawabanmu:</strong><br>${item.userAnswer}</p><p class="text-green-700"><strong class="font-semibold">Seharusnya:</strong><br>${item.correctAnswer}</p></div>`;
+                    });
+                }
+                summaryHTML += '</div>';
+                Swal.fire({
+                    title: 'Kuis Selesai!',
+                    html: summaryHTML,
+                    icon: 'info',
+                    confirmButtonText: 'Main Lagi'
+                }).then(() => {
+                    window.location.href = '/quiz';
+                });
+            }
+
+            // === Start the process ===
+            initializeGame();
+        });
+    </script>
+</body>
+
+</html>

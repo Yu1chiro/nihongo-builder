@@ -1,0 +1,85 @@
+{
+ "level1": [
+  {
+    "fragments": ["私", "は", "日本語", "を", "勉強します"],
+    "correctOrder": [0, 1, 2, 3, 4],
+    "clue": "Pola dasar: Subjek + は + Objek + を + Kata kerja."
+  },
+ {
+  "fragments": ["私", "レストラン", "に", "行きました", "昨日"],
+  "correctOrder": [4, 0, 1, 2, 3],
+  "clue": "Gunakan urutan waktu + subjek + tempat + に + kata kerja untuk menunjukkan aktivitas pergi ke suatu tempat."
+},
+  {
+    "fragments": ["朝", "ご飯", "を", "食べました", "私は"],
+    "correctOrder": [4, 0, 1, 2, 3],
+    "clue": "Susunan umum: Subjek + waktu + objek + kata kerja."
+  },
+  {
+    "fragments": ["犬", "が", "公園", "で", "走っています"],
+    "correctOrder": [0, 1, 2, 3, 4],
+    "clue": "Gunakan 'が' untuk subjek dan 'で' untuk tempat."
+  },
+  {
+    "fragments": ["音楽", "が", "私", "は", "好きです"],
+    "correctOrder": [2, 3, 0, 1, 4],
+    "clue": "'好き' butuh partikel 'が' untuk objek kesukaan."
+  }
+],
+"level2": [
+  {
+    "fragments": ["これ", "は", "いくら", "です", "か"],
+    "correctOrder": [0, 1, 2, 3, 4],
+    "clue": "Gunakan bentuk tanya sopan: 〜いくらですか"
+  },
+  {
+    "fragments": ["水", "を", "飲んで", "も", "いいですか"],
+    "correctOrder": [0, 1, 2, 3, 4],
+    "clue": "Bentuk izin: 〜て も いいですか."
+  },
+  {
+    "fragments": ["まだ", "晩ご飯", "を", "食べて", "いません"],
+    "correctOrder": [0, 1, 2, 3, 4],
+    "clue": "Negasi progresif: 〜ていません."
+  },
+  {
+    "fragments": ["図書館", "で", "静かに", "しなければ", "なりません"],
+    "correctOrder": [0, 1, 2, 3, 4],
+    "clue": "Bentuk keharusan: 〜なければなりません."
+  },
+  {
+    "fragments": ["先生", "に", "質問", "を", "しました"],
+    "correctOrder": [0, 1, 2, 3, 4],
+    "clue": "Gunakan 'に' untuk tujuan (kepada siapa)."
+  }
+]
+,
+ "level3": [
+  {
+    "fragments": ["勉強", "したり", "テレビ", "を", "見たり", "します"],
+    "correctOrder": [0, 1, 2, 3, 4, 5],
+    "clue": "Bentuk たり〜たり untuk menyebutkan aktivitas."
+  },
+  {
+    "fragments": ["日本", "へ", "行きたい", "です", "私は"],
+    "correctOrder": [4, 0, 1, 2, 3],
+    "clue": "Keinginan: 〜たいです."
+  },
+  {
+    "fragments": ["雨", "が", "降った", "ので", "出かけません"],
+    "correctOrder": [0, 1, 2, 3, 4],
+    "clue": "Bentuk sebab-akibat: 〜ので."
+  },
+  {
+    "fragments": ["毎日", "運動", "する", "ように", "しています"],
+    "correctOrder": [0, 1, 2, 3, 4],
+    "clue": "Usaha membiasakan diri: 〜ようにしています."
+  },
+  {
+    "fragments": ["時間", "が", "あれば", "映画", "を", "見ます"],
+    "correctOrder": [0, 1, 2, 3, 4, 5],
+    "clue": "Kondisional: 〜ば + hasil."
+  }
+]
+
+}
