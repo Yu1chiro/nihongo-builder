@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistik Kuis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .gradient-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .gradient-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .gradient-error {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .gradient-warning {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .stats-card {
+            transition: all 0.3s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        .tab-active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .level-badge {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .level-badge:hover::before {
+            left: 100%;
+        }
+         /* Styling untuk navbar bottom */
+        .navbar-bottom {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Animasi untuk tombol aktif */
+        .nav-item.active {
+            color: #3b82f6;
+        }
+        
+        .nav-item:hover {
+            color: #3b82f6;
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding-bottom: 80px; /* Space for bottom navbar */
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <!-- Header -->
+         <header class="bg-white/90 backdrop-blur-sm shadow-lg sticky top-0 z-50 md:hidden block">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 gradient-card rounded-full flex items-center justify-center">
+                        <span class="text-white text-lg font-bold">📊</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Statistik Kuis</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Navbar Bottom untuk Mobile -->
+    <nav class="navbar-bottom fixed bottom-0 left-0 right-0 z-50 md:hidden block border-t border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-around py-2">
+                <!-- Home -->
+                <button onclick="window.location.href='/'" class="nav-item flex flex-col items-center p-2 text-gray-600 transition-all duration-200">
+                    <span class="text-xl mb-1">🏠</span>
+                    <span class="text-xs font-medium">Home</span>
+                </button>
+                
+                <!-- Export -->
+                <button id="exportBtnMobile" class="nav-item flex flex-col items-center p-2 text-gray-600 transition-all duration-200">
+                    <span class="text-xl mb-1">📁</span>
+                    <span class="text-xs font-medium">Export</span>
+                </button>
+                
+                <!-- Hapus Data -->
+                <button id="clearBtnMobile" class="nav-item flex flex-col items-center p-2 text-gray-600 transition-all duration-200">
+                    <span class="text-xl mb-1">🗑️</span>
+                    <span class="text-xs font-medium">Hapus</span>
+                </button>
+                
+                <!-- Main Lagi -->
+                <button onclick="window.location.href='/quiz'" class="nav-item flex flex-col items-center p-2 text-gray-600 transition-all duration-200">
+                    <span class="text-xl mb-1">🎮</span>
+                    <span class="text-xs font-medium">Main</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-6">
+        <!-- Loading State -->
+        <div id="loadingState" class="flex justify-center items-center h-64">
+            <div class="text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
+                <p class="text-gray-600">Memuat statistik...</p>
+            </div>
+        </div>
+
+        <!-- No Data State -->
+        <div id="noDataState" class="hidden text-center py-16">
+            <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span class="text-4xl">📈</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Belum Ada Data</h3>
+            <p class="text-gray-600 mb-6">Mulai bermain kuis untuk melihat statistik Anda</p>
+            <button onclick="window.location.href='/quiz'" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors duration-200">
+                Mulai Bermain
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" class="hidden">
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="stats-card bg-white rounded-xl p-6 shadow-lg fade-in-up">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Total Permainan</p>
+                            <p id="totalGames" class="text-3xl font-bold text-gray-800">0</p>
+                        </div>
+                        <div class="w-12 h-12 gradient-success rounded-full flex items-center justify-center">
+                            <span class="text-white text-xl">🎮</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-card bg-white rounded-xl p-6 shadow-lg fade-in-up" style="animation-delay: 0.1s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Rata-rata Skor</p>
+                            <p id="avgScore" class="text-3xl font-bold text-gray-800">0%</p>
+                        </div>
+                        <div class="w-12 h-12 gradient-card rounded-full flex items-center justify-center">
+                            <span class="text-white text-xl">📊</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-card bg-white rounded-xl p-6 shadow-lg fade-in-up" style="animation-delay: 0.2s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Level Tertinggi</p>
+                            <p id="maxLevel" class="text-3xl font-bold text-gray-800">0</p>
+                        </div>
+                        <div class="w-12 h-12 gradient-warning rounded-full flex items-center justify-center">
+                            <span class="text-white text-xl">🏆</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-card bg-white rounded-xl p-6 shadow-lg fade-in-up" style="animation-delay: 0.3s">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Jawaban Benar</p>
+                            <p id="correctAnswers" class="text-3xl font-bold text-gray-800">0</p>
+                        </div>
+                        <div class="w-12 h-12 gradient-success rounded-full flex items-center justify-center">
+                            <span class="text-white text-xl">✅</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white rounded-xl p-6 shadow-lg fade-in-up" style="animation-delay: 0.4s">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Performa per Level</h3>
+                    <div class="chart-container">
+                        <canvas id="levelChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-lg fade-in-up" style="animation-delay: 0.5s">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Tren Skor</h3>
+                    <div class="chart-container">
+                        <canvas id="scoreChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="bg-white rounded-xl shadow-lg fade-in-up" style="animation-delay: 0.6s">
+                <div class="border-b">
+                    <nav class="flex space-x-8 px-6">
+                        <button class="tab-btn py-4 px-2 border-b-2 border-transparent font-medium text-sm tab-active" data-tab="recent">
+                            Permainan Terbaru
+                        </button>
+                        <button class="tab-btn py-4 px-2 border-b-2 border-transparent font-medium text-sm hover:text-gray-700" data-tab="detailed">
+                            Detail per Soal
+                        </button>
+                        <button class="tab-btn py-4 px-2 border-b-2 border-transparent font-medium text-sm hover:text-gray-700" data-tab="achievements">
+                            Pencapaian
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="p-6">
+                    <!-- Recent Games Tab -->
+                    <div id="recentTab" class="tab-content">
+                        <div id="recentGamesContainer" class="space-y-4 custom-scrollbar max-h-96 overflow-y-auto">
+                            <!-- Content will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Detailed Tab -->
+                    <div id="detailedTab" class="tab-content hidden">
+                        <div class="mb-4">
+                            <select id="levelFilter" class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option value="all">Semua Level</option>
+                            </select>
+                        </div>
+                        <div id="detailedContainer" class="space-y-4 custom-scrollbar max-h-96 overflow-y-auto">
+                            <!-- Content will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Achievements Tab -->
+                    <div id="achievementsTab" class="tab-content hidden">
+                        <div id="achievementsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Content will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        class QuizStatistics {
+            constructor() {
+                this.data = this.loadData();
+                this.charts = {};
+                this.init();
+            }
+
+            init() {
+                this.showLoading();
+                setTimeout(() => {
+                    if (this.data.length === 0) {
+                        this.showNoData();
+                    } else {
+                        this.showMainContent();
+                        this.renderSummaryCards();
+                        this.renderCharts();
+                        this.renderTabs();
+                        this.setupEventListeners();
+                    }
+                }, 1000);
+            }
+
+            loadData() {
+                const data = localStorage.getItem('quizStatistics');
+                return data ? JSON.parse(data) : [];
+            }
+
+            saveData() {
+                localStorage.setItem('quizStatistics', JSON.stringify(this.data));
+            }
+
+            addGameResult(gameData) {
+                const gameResult = {
+                    id: Date.now(),
+                    timestamp: new Date().toISOString(),
+                    level: gameData.level,
+                    totalQuestions: gameData.totalQuestions,
+                    correctAnswers: gameData.correctAnswers,
+                    score: gameData.score,
+                    timeTaken: gameData.timeTaken || 0,
+                    details: gameData.details || []
+                };
+                this.data.unshift(gameResult);
+                this.saveData();
+            }
+
+            showLoading() {
+                document.getElementById('loadingState').classList.remove('hidden');
+                document.getElementById('noDataState').classList.add('hidden');
+                document.getElementById('mainContent').classList.add('hidden');
+            }
+
+            showNoData() {
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('noDataState').classList.remove('hidden');
+                document.getElementById('mainContent').classList.add('hidden');
+            }
+
+            showMainContent() {
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('noDataState').classList.add('hidden');
+                document.getElementById('mainContent').classList.remove('hidden');
+            }
+
+            renderSummaryCards() {
+                const totalGames = this.data.length;
+                const avgScore = totalGames > 0 ? this.data.reduce((sum, game) => sum + game.score, 0) / totalGames : 0;
+                const maxLevel = Math.max(...this.data.map(game => game.level), 0);
+                const totalCorrect = this.data.reduce((sum, game) => sum + game.correctAnswers, 0);
+
+                document.getElementById('totalGames').textContent = totalGames;
+                document.getElementById('avgScore').textContent = `${avgScore.toFixed(1)}%`;
+                document.getElementById('maxLevel').textContent = maxLevel;
+                document.getElementById('correctAnswers').textContent = totalCorrect;
+            }
+
+            renderCharts() {
+                this.renderLevelChart();
+                this.renderScoreChart();
+            }
+
+            renderLevelChart() {
+                const ctx = document.getElementById('levelChart').getContext('2d');
+                const levelData = {};
+                
+                this.data.forEach(game => {
+                    if (!levelData[game.level]) {
+                        levelData[game.level] = { total: 0, correct: 0 };
+                    }
+                    levelData[game.level].total += game.totalQuestions;
+                    levelData[game.level].correct += game.correctAnswers;
+                });
+
+                const levels = Object.keys(levelData).sort((a, b) => parseInt(a) - parseInt(b));
+                const accuracyData = levels.map(level => {
+                    const data = levelData[level];
+                    return data.total > 0 ? (data.correct / data.total) * 100 : 0;
+                });
+
+                this.charts.levelChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: levels.map(level => `Level ${level}`),
+                        datasets: [{
+                            label: 'Akurasi (%)',
+                            data: accuracyData,
+                            backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                            borderColor: 'rgba(102, 126, 234, 1)',
+                            borderWidth: 2,
+                            borderRadius: 8,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            renderScoreChart() {
+                const ctx = document.getElementById('scoreChart').getContext('2d');
+                const recentGames = this.data.slice(0, 10).reverse();
+
+                this.charts.scoreChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: recentGames.map((_, index) => `Game ${index + 1}`),
+                        datasets: [{
+                            label: 'Skor (%)',
+                            data: recentGames.map(game => game.score),
+                            borderColor: 'rgba(79, 172, 254, 1)',
+                            backgroundColor: 'rgba(79, 172, 254, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: 'rgba(79, 172, 254, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            renderTabs() {
+                this.renderRecentGames();
+                this.renderDetailedView();
+                this.renderAchievements();
+            }
+
+            renderRecentGames() {
+                const container = document.getElementById('recentGamesContainer');
+                const recentGames = this.data.slice(0, 20);
+
+                container.innerHTML = recentGames.map(game => {
+                    const date = new Date(game.timestamp).toLocaleString('id-ID');
+                    const scoreColor = game.score >= 80 ? 'text-green-600' : game.score >= 60 ? 'text-yellow-600' : 'text-red-600';
+                    
+                    return `
+                        <div class="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors duration-200">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center space-x-4">
+                                    <div class="level-badge bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                        Level ${game.level}
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-gray-800">${game.correctAnswers}/${game.totalQuestions} benar</p>
+                                        <p class="text-sm text-gray-600">${date}</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold ${scoreColor}">${game.score.toFixed(0)}%</p>
+                                    <div class="flex items-center space-x-1">
+                                        ${this.getScoreStars(game.score)}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            renderDetailedView() {
+                const levelFilter = document.getElementById('levelFilter');
+                const container = document.getElementById('detailedContainer');
+
+                // Populate level filter
+                const levels = [...new Set(this.data.map(game => game.level))].sort((a, b) => a - b);
+                levelFilter.innerHTML = '<option value="all">Semua Level</option>' + 
+                    levels.map(level => `<option value="${level}">Level ${level}</option>`).join('');
+
+                this.updateDetailedView();
+
+                levelFilter.addEventListener('change', () => {
+                    this.updateDetailedView();
+                });
+            }
+
+            updateDetailedView() {
+                const levelFilter = document.getElementById('levelFilter');
+                const container = document.getElementById('detailedContainer');
+                const selectedLevel = levelFilter.value;
+
+                let filteredData = this.data;
+                if (selectedLevel !== 'all') {
+                    filteredData = this.data.filter(game => game.level == selectedLevel);
+                }
+
+                const detailedQuestions = [];
+                filteredData.forEach(game => {
+                    if (game.details && game.details.length > 0) {
+                        game.details.forEach((detail, index) => {
+                            detailedQuestions.push({
+                                ...detail,
+                                gameId: game.id,
+                                level: game.level,
+                                questionNumber: index + 1,
+                                timestamp: game.timestamp
+                            });
+                        });
+                    }
+                });
+
+                container.innerHTML = detailedQuestions.map(question => {
+                    const isCorrect = question.isCorrect;
+                    const statusColor = isCorrect ? 'text-green-600' : 'text-red-600';
+                    const statusIcon = isCorrect ? '✅' : '❌';
+                    const date = new Date(question.timestamp).toLocaleDateString('id-ID');
+
+                    return `
+                        <div class="border rounded-lg p-4 ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-lg">${statusIcon}</span>
+                                    <span class="font-medium text-gray-800">Level ${question.level} - Soal ${question.questionNumber}</span>
+                                    <span class="text-sm text-gray-500">${date}</span>
+                                </div>
+                                <span class="text-sm font-medium ${statusColor}">
+                                    ${isCorrect ? 'BENAR' : 'SALAH'}
+                                </span>
+                            </div>
+                            <div class="space-y-2 text-sm">
+                                <div>
+                                    <span class="font-medium text-gray-700">Jawaban Anda:</span>
+                                    <p class="text-gray-600 mt-1">${question.userAnswer}</p>
+                                </div>
+                                ${!isCorrect ? `
+                                    <div>
+                                        <span class="font-medium text-gray-700">Jawaban yang Benar:</span>
+                                        <p class="text-green-600 mt-1">${question.correctAnswer}</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            renderAchievements() {
+                const container = document.getElementById('achievementsContainer');
+                const achievements = this.calculateAchievements();
+
+                container.innerHTML = achievements.map(achievement => `
+                    <div class="achievement-card bg-gradient-to-br ${achievement.gradient} p-6 rounded-xl text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-3xl">${achievement.icon}</span>
+                            <span class="text-sm opacity-80">${achievement.unlocked ? 'Terbuka' : 'Terkunci'}</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">${achievement.title}</h3>
+                        <p class="text-sm opacity-90 mb-3">${achievement.description}</p>
+                        <div class="w-full bg-white/20 rounded-full h-2">
+                            <div class="bg-white rounded-full h-2 transition-all duration-500" style="width: ${achievement.progress}%"></div>
+                        </div>
+                        <p class="text-xs mt-2 opacity-80">${achievement.progressText}</p>
+                    </div>
+                `).join('');
+            }
+
+            calculateAchievements() {
+                const totalGames = this.data.length;
+                const perfectGames = this.data.filter(game => game.score === 100).length;
+                const maxLevel = Math.max(...this.data.map(game => game.level), 0);
+                const totalCorrect = this.data.reduce((sum, game) => sum + game.correctAnswers, 0);
+                const avgScore = totalGames > 0 ? this.data.reduce((sum, game) => sum + game.score, 0) / totalGames : 0;
+
+                return [
+                    {
+                        title: 'Pemula',
+                        description: 'Selesaikan permainan pertama Anda',
+                        icon: '🌟',
+                        gradient: 'from-blue-500 to-blue-600',
+                        unlocked: totalGames >= 1,
+                        progress: Math.min(totalGames / 1 * 100, 100),
+                        progressText: `${totalGames}/1 permainan`
+                    },
+                    {
+                        title: 'Konsisten',
+                        description: 'Mainkan 10 kali',
+                        icon: '🎯',
+                        gradient: 'from-green-500 to-green-600',
+                        unlocked: totalGames >= 10,
+                        progress: Math.min(totalGames / 10 * 100, 100),
+                        progressText: `${totalGames}/10 permainan`
+                    },
+                    {
+                        title: 'Sempurna',
+                        description: 'Dapatkan skor 100% sebanyak 5 kali',
+                        icon: '💎',
+                        gradient: 'from-purple-500 to-purple-600',
+                        unlocked: perfectGames >= 5,
+                        progress: Math.min(perfectGames / 5 * 100, 100),
+                        progressText: `${perfectGames}/5 skor sempurna`
+                    },
+                    {
+                        title: 'Penjelajah',
+                        description: 'Capai Level 5',
+                        icon: '🚀',
+                        gradient: 'from-orange-500 to-orange-600',
+                        unlocked: maxLevel >= 5,
+                        progress: Math.min(maxLevel / 5 * 100, 100),
+                        progressText: `Level ${maxLevel}/5`
+                    },
+                    {
+                        title: 'Ahli',
+                        description: 'Pertahankan rata-rata skor 80%+',
+                        icon: '🏆',
+                        gradient: 'from-yellow-500 to-yellow-600',
+                        unlocked: avgScore >= 80,
+                        progress: Math.min(avgScore / 80 * 100, 100),
+                        progressText: `${avgScore.toFixed(1)}%/80% rata-rata`
+                    },
+                    {
+                        title: 'Kolektor',
+                        description: 'Jawab 100 soal dengan benar',
+                        icon: '📚',
+                        gradient: 'from-indigo-500 to-indigo-600',
+                        unlocked: totalCorrect >= 100,
+                        progress: Math.min(totalCorrect / 100 * 100, 100),
+                        progressText: `${totalCorrect}/100 jawaban benar`
+                    }
+                ];
+            }
+
+            getScoreStars(score) {
+                const stars = Math.floor(score / 20);
+                return '⭐'.repeat(stars) + '☆'.repeat(5 - stars);
+            }
+
+            setupEventListeners() {
+                // Tab switching
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const tabName = btn.dataset.tab;
+                        this.switchTab(tabName);
+                    });
+                });
+
+                // Clear data
+                document.getElementById('clearBtn').addEventListener('click', () => {
+                    Swal.fire({
+                        title: 'Hapus Semua Data?',
+                        text: 'Tindakan ini tidak dapat dibatalkan!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ya, Hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            localStorage.removeItem('quizStatistics');
+                            location.reload();
+                        }
+                    });
+                });
+
+                // Export data
+                document.getElementById('exportBtn').addEventListener('click', () => {
+                    this.exportData();
+                });
+            }
+
+            switchTab(tabName) {
+                // Update tab buttons
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('hover:text-gray-700');
+                });
+                document.querySelector(`[data-tab="${tabName}"]`).classList.add('tab-active');
+                document.querySelector(`[data-tab="${tabName}"]`).classList.remove('hover:text-gray-700');
+
+                // Show/hide tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(`${tabName}Tab`).classList.remove('hidden');
+            }
+
+            exportData() {
+                const exportData = {
+                    exportDate: new Date().toISOString(),
+                    totalGames: this.data.length,
+                    statistics: this.data,
+                    summary: {
+                        avgScore: this.data.length > 0 ? this.data.reduce((sum, game) => sum + game.score, 0) / this.data.length : 0,
+                        maxLevel: Math.max(...this.data.map(game => game.level), 0),
+                        totalCorrect: this.data.reduce((sum, game) => sum + game.correctAnswers, 0),
+                        totalQuestions: this.data.reduce((sum, game) => sum + game.totalQuestions, 0)
+                    }
+                };
+
+                const dataStr = JSON.stringify(exportData, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(dataBlob);
+                
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `quiz-statistics-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+
+                Swal.fire({
+                    title: 'Data Berhasil Diekspor!',
+                    text: 'File JSON telah diunduh ke perangkat Anda',
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            }
+
+            // Method untuk menambah data dari game (dipanggil dari halaman game)
+            static addGameResult(gameData) {
+                const statistics = new QuizStatistics();
+                statistics.addGameResult(gameData);
+            }
+        }
+
+        // Inisialisasi halaman statistik
+        document.addEventListener('DOMContentLoaded', () => {
+            window.quizStats = new QuizStatistics();
+        });
+
+        // Fungsi untuk menambah data statistik (dapat dipanggil dari halaman lain)
+        function addQuizStatistic(gameData) {
+            const existingData = JSON.parse(localStorage.getItem('quizStatistics') || '[]');
+            
+            const gameResult = {
+                id: Date.now(),
+                timestamp: new Date().toISOString(),
+                level: gameData.level,
+                totalQuestions: gameData.totalQuestions,
+                correctAnswers: gameData.correctAnswers,
+                score: gameData.score,
+                timeTaken: gameData.timeTaken || 0,
+                details: gameData.details || []
+            };
+            
+            existingData.unshift(gameResult);
+            localStorage.setItem('quizStatistics', JSON.stringify(existingData));
+        }
+
+        // Expose fungsi untuk digunakan dari halaman lain
+        window.addQuizStatistic = addQuizStatistic;
+    </script>
+</body>
+
+</html>

@@ -15,6 +15,9 @@ app.use('/data', express.static(path.join(__dirname, 'data')));
 app.get('/quiz', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'quiz.html'));
 });
+app.get('/info', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'info.html'));
+});
 
 app.listen(PORT, () => {
     console.log(`Server berjalan di http://localhost:${PORT}`);

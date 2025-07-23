@@ -225,6 +225,7 @@
             let fallenBubblesCount = 0,
                 isGameOver = false;
             let timeLeft = 60; // Atur Timer Pertama
+            let gameStartTime = Date.now();
             const params = new URLSearchParams(window.location.search);
             const level = params.get('level');
 
@@ -254,18 +255,19 @@
             }
 
             // === Fetch Data and Start Game ===
-            async function initializeGame() {
-                try {
-                    const response = await fetch('/data/questions.json');
-                    quizData = await response.json();
-                    const urlParams = new URLSearchParams(window.location.search);
-                    currentLevel = parseInt(urlParams.get('level')) || 1;
-                    initializeDragAndDrop();
-                    loadQuestion();
-                } catch (error) {
-                    Swal.fire('Error', 'Gagal memuat data kuis.', 'error');
-                }
-            }
+          async function initializeGame() {
+    try {
+        gameStartTime = Date.now(); // Set waktu mulai
+        const response = await fetch('/data/questions.json');
+        quizData = await response.json();
+        const urlParams = new URLSearchParams(window.location.search);
+        currentLevel = parseInt(urlParams.get('level')) || 1;
+        initializeDragAndDrop();
+        loadQuestion();
+    } catch (error) {
+        Swal.fire('Error', 'Gagal memuat data kuis.', 'error');
+    }
+}
 
             // === Load and Display Question ===
             function loadQuestion(skipAnimation = false) {
@@ -407,7 +409,7 @@
                             heightAuto: false,
                             confirmButtonText: 'Coba Lagi'
                         }).then(() => {
-                            window.location.reload();
+                             window.location.href = `/quiz?level=${level}`;
                         });
                     }
 
@@ -560,33 +562,124 @@
             checkAnswerBtn.addEventListener('click', checkAnswer);
 
             // === End Game Summary ===
-            function endGame() {
-                const totalQuestions = scoreSummary.length;
-                const correctAnswers = scoreSummary.filter(s => s.isCorrect).length;
-                const score = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
-                let summaryHTML =
-                    `<div class="text-left text-sm max-h-60 overflow-y-auto"><p class="mb-4 text-center text-base">Skor Akhir: <strong>${score.toFixed(0)}%</strong> (${correctAnswers}/${totalQuestions} benar)</p><h3 class="font-bold mb-2 text-center">Detail Jawaban Salah:</h3>`;
-                const incorrect = scoreSummary.filter(s => !s.isCorrect);
-                if (incorrect.length === 0) {
-                    summaryHTML +=
-                        '<p class="text-center text-green-600">Luar biasa! Semua jawabanmu benar!</p>';
-                } else {
-                    incorrect.forEach(item => {
-                        summaryHTML +=
-                            `<div class="mb-3 p-2 border rounded-md bg-red-50"><p class="text-red-700"><strong class="font-semibold">Jawabanmu:</strong><br>${item.userAnswer}</p><p class="text-green-700"><strong class="font-semibold">Seharusnya:</strong><br>${item.correctAnswer}</p></div>`;
-                    });
-                }
-                summaryHTML += '</div>';
-                Swal.fire({
-                    title: 'Kuis Selesai!',
-                    html: summaryHTML,
-                    icon: 'info',
-                    confirmButtonText: 'Main Lagi'
-                }).then(() => {
-                    window.location.href = '/quiz';
-                });
-            }
+           function endGame() {
+    const totalQuestions = scoreSummary.length;
+    const correctAnswers = scoreSummary.filter(s => s.isCorrect).length;
+    const score = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
+    const timeTaken = Math.floor((Date.now() - gameStartTime) / 1000); // dalam detik
 
+    // Simpan statistik ke localStorage
+    const gameData = {
+        level: currentLevel,
+        totalQuestions: totalQuestions,
+        correctAnswers: correctAnswers,
+        score: score,
+        timeTaken: timeTaken,
+        details: scoreSummary.map(item => ({
+            question: item.question,
+            userAnswer: item.userAnswer,
+            correctAnswer: item.correctAnswer,
+            isCorrect: item.isCorrect
+        }))
+    };
+
+    // Panggil fungsi untuk menyimpan statistik
+    if (typeof addQuizStatistic === 'function') {
+        addQuizStatistic(gameData);
+    } else {
+        // Fallback jika fungsi tidak tersedia
+        const existingStats = JSON.parse(localStorage.getItem('quizStatistics') || '[]');
+        const gameResult = {
+            id: Date.now(),
+            timestamp: new Date().toISOString(),
+            level: gameData.level,
+            totalQuestions: gameData.totalQuestions,
+            correctAnswers: gameData.correctAnswers,
+            score: gameData.score,
+            timeTaken: gameData.timeTaken,
+            details: gameData.details
+        };
+        existingStats.unshift(gameResult);
+        localStorage.setItem('quizStatistics', JSON.stringify(existingStats));
+    }
+
+    // Tampilkan ringkasan seperti biasa
+    let summaryHTML = `
+        <div class="text-left text-sm max-h-60 overflow-y-auto">
+            <div class="text-center mb-4">
+                <p class="text-base mb-2">Skor Akhir: <strong class="text-2xl text-blue-600">${score.toFixed(0)}%</strong></p>
+                <p class="text-sm text-gray-600">${correctAnswers}/${totalQuestions} benar • Waktu: ${Math.floor(timeTaken / 60)}:${(timeTaken % 60).toString().padStart(2, '0')}</p>
+            </div>
+            <h3 class="font-bold mb-2 text-center">Detail Jawaban:</h3>
+    `;
+
+    if (correctAnswers === totalQuestions) {
+        summaryHTML += '<p class="text-center text-green-600 font-semibold">🎉 Sempurna! Semua jawaban benar!</p>';
+    } else {
+        const incorrect = scoreSummary.filter(s => !s.isCorrect);
+        if (incorrect.length > 0) {
+            summaryHTML += '<div class="space-y-2">';
+            incorrect.forEach((item, index) => {
+                summaryHTML += `
+                    <div class="p-3 border rounded-md bg-red-50 border-red-200">
+                        <p class="text-red-700 text-xs mb-1"><strong>Soal ${scoreSummary.indexOf(item) + 1}:</strong></p>
+                        <p class="text-red-600 text-sm"><strong>Jawaban Anda:</strong><br>${item.userAnswer}</p>
+                        <p class="text-green-600 text-sm mt-1"><strong>Seharusnya:</strong><br>${item.correctAnswer}</p>
+                    </div>
+                `;
+            });
+            summaryHTML += '</div>';
+        }
+    }
+    summaryHTML += '</div>';
+
+    // Tambahkan tombol statistik ke dialog
+    Swal.fire({
+        title: 'Kuis Selesai!',
+        html: summaryHTML,
+        icon: score >= 80 ? 'success' : score >= 60 ? 'info' : 'error',
+        showCancelButton: true,
+        confirmButtonText: '🎮 Main Lagi',
+        cancelButtonText: '📊 Lihat Statistik',
+        reverseButtons: true,
+        customClass: {
+            confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2',
+            cancelButton: 'bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = '/quiz';
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            window.location.href = '/info'; // Sesuaikan dengan path halaman statistik
+        }
+    });
+}
+
+// Modifikasi fungsi initializeGame() untuk set waktu mulai
+
+// Tambahkan script tag untuk memuat fungsi statistik (opsional)
+// Bisa juga langsung include statistik script di head halaman
+const statisticsScript = document.createElement('script');
+statisticsScript.innerHTML = `
+    function addQuizStatistic(gameData) {
+        const existingData = JSON.parse(localStorage.getItem('quizStatistics') || '[]');
+        
+        const gameResult = {
+            id: Date.now(),
+            timestamp: new Date().toISOString(),
+            level: gameData.level,
+            totalQuestions: gameData.totalQuestions,
+            correctAnswers: gameData.correctAnswers,
+            score: gameData.score,
+            timeTaken: gameData.timeTaken || 0,
+            details: gameData.details || []
+        };
+        
+        existingData.unshift(gameResult);
+        localStorage.setItem('quizStatistics', JSON.stringify(existingData));
+    }
+`;
+document.head.appendChild(statisticsScript);
             // === Start the process ===
             initializeGame();
         });
