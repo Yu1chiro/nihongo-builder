@@ -1,7 +1,7 @@
 {
  "level1": [
    {
-    "fragments": ["すいません", "みたいんですが", "写真", "を", "撮って"],
+    "fragments": ["すみいません", "みたいんですが", "写真", "を", "撮って"],
     "correctOrder": [0, 2, 3, 4, 1],
     "clue": "Gunakan pola ～てみたい untuk menyatakan keinginan mencoba sesuatu."
   },
