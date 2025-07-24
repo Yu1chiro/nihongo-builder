@@ -1,84 +1,71 @@
 {
  "level1": [
-  {
-    "fragments": ["私", "は", "日本語", "を", "勉強します"],
-    "correctOrder": [0, 1, 2, 3, 4],
-    "clue": "Pola dasar: Subjek + は + Objek + を + Kata kerja."
-  },
- {
-  "fragments": ["私", "レストラン", "に", "行きました", "昨日"],
-  "correctOrder": [4, 0, 1, 2, 3],
-  "clue": "Gunakan urutan waktu + subjek + tempat + に + kata kerja untuk menunjukkan aktivitas pergi ke suatu tempat."
-},
-  {
-    "fragments": ["朝", "ご飯", "を", "食べました", "私は"],
-    "correctOrder": [4, 0, 1, 2, 3],
-    "clue": "Susunan umum: Subjek + waktu + objek + kata kerja."
+   {
+    "fragments": ["すいません", "みたいんですが", "写真", "を", "撮って"],
+    "correctOrder": [0, 2, 3, 4, 1],
+    "clue": "Gunakan pola ～てみたい untuk menyatakan keinginan mencoba sesuatu."
   },
   {
-    "fragments": ["犬", "が", "公園", "で", "走っています"],
-    "correctOrder": [0, 1, 2, 3, 4],
-    "clue": "Gunakan 'が' untuk subjek dan 'で' untuk tempat."
+    "fragments": ["この", "を", "やって", "仕事", "みたいんですが", "どうすればいいですか？"],
+    "correctOrder": [0, 3, 1, 2, 4, 5],
+    "clue": "Gunakan pola ～てみたい + 'んですが' untuk menyatakan niat dan bertanya saran."
   },
   {
-    "fragments": ["音楽", "が", "私", "は", "好きです"],
-    "correctOrder": [2, 3, 0, 1, 4],
-    "clue": "'好き' butuh partikel 'が' untuk objek kesukaan."
+    "fragments": ["料理", "作って", "の", "を", "みたいんですが", "日本"],
+    "correctOrder": [5, 2, 0, 3, 1, 4],
+    "clue": "Gunakan pola [negara + の + kata benda] dan ～てみたい untuk menyusun keinginan mencoba."
   }
 ],
 "level2": [
-  {
-    "fragments": ["これ", "は", "いくら", "です", "か"],
-    "correctOrder": [0, 1, 2, 3, 4],
-    "clue": "Gunakan bentuk tanya sopan: 〜いくらですか"
+   {
+    "fragments": ["英語", "に", "３回", "一週間", "クラス", "行きます", "は"],
+    "correctOrder": [0, 4, 6, 3, 2, 1, 5],
+    "clue": "Gunakan pola frekuensi waktu seperti『一週間に３回』dan partikel tujuan『に』."
   },
   {
-    "fragments": ["水", "を", "飲んで", "も", "いいですか"],
-    "correctOrder": [0, 1, 2, 3, 4],
-    "clue": "Bentuk izin: 〜て も いいですか."
+    "fragments": ["家族", "２回", "１年", "海", "へ", "行きます", "と"],
+    "correctOrder": [2, 1, 0, 6, 3, 4, 5],
+    "clue": "Gunakan『１年に２回』untuk menyatakan frekuensi dan『と』untuk menyebut teman beraktivitas."
   },
   {
-    "fragments": ["まだ", "晩ご飯", "を", "食べて", "いません"],
-    "correctOrder": [0, 1, 2, 3, 4],
-    "clue": "Negasi progresif: 〜ていません."
-  },
-  {
-    "fragments": ["図書館", "で", "静かに", "しなければ", "なりません"],
-    "correctOrder": [0, 1, 2, 3, 4],
-    "clue": "Bentuk keharusan: 〜なければなりません."
-  },
-  {
-    "fragments": ["先生", "に", "質問", "を", "しました"],
-    "correctOrder": [0, 1, 2, 3, 4],
-    "clue": "Gunakan 'に' untuk tujuan (kepada siapa)."
+    "fragments": ["ただ", "へ", "私は", "3回", "スーパー", "に", "行きます", "一週間", "に"],
+    "correctOrder": [2, 0, 7, 3, 8, 4, 5, 1, 6],
+    "clue": "Perhatikan posisi 'ただ' (hanya) dan pola frekuensi『一週間に３回』+ tempat『スーパーへ』."
   }
 ]
 ,
  "level3": [
-  {
-    "fragments": ["勉強", "したり", "テレビ", "を", "見たり", "します"],
+   {
+    "fragments": ["すみません", "それ", "は", "重い", "そうですね", "手伝いましょうか？"],
     "correctOrder": [0, 1, 2, 3, 4, 5],
-    "clue": "Bentuk たり〜たり untuk menyebutkan aktivitas."
+    "clue": "Gunakan pola sopan menawarkan bantuan: ～ましょうか."
   },
   {
-    "fragments": ["日本", "へ", "行きたい", "です", "私は"],
-    "correctOrder": [4, 0, 1, 2, 3],
-    "clue": "Keinginan: 〜たいです."
+    "fragments": ["海", "は", "どう", "ですか", "行きましょうか", "きれい", "ですね", "海", "は"],
+    "correctOrder": [0, 1, 5, 6, 7, 8, 2, 3, 4],
+    "clue": "Gabungkan ekspresi pengamatan『ですね』dan ajakan『～ましょうか』."
   },
   {
-    "fragments": ["雨", "が", "降った", "ので", "出かけません"],
+    "fragments": ["暑い", "ですね", "窓", "を", "開けましょうか？"],
     "correctOrder": [0, 1, 2, 3, 4],
-    "clue": "Bentuk sebab-akibat: 〜ので."
+    "clue": "Gunakan ekspresi keadaan『～ですね』diikuti penawaran tindakan『～ましょうか』."
+  }
+],
+ "level4": [
+   {
+    "fragments": ["あの人", "が", "上手", "ですね", "上手", "は", "どういう", "意味", "ですか？"],
+    "correctOrder": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    "clue": "Gunakan pola menanyakan makna: 『〜はどういう意味ですか？』 setelah menyebutkan kata."
   },
   {
-    "fragments": ["毎日", "運動", "する", "ように", "しています"],
-    "correctOrder": [0, 1, 2, 3, 4],
-    "clue": "Usaha membiasakan diri: 〜ようにしています."
+    "fragments": ["一週間前", "に", "雨", "が", "降る", "そうですね", "ジメジメ", "は", "どういう", "意味", "ですか？"],
+    "correctOrder": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "clue": "Gabungkan keterangan waktu + informasi + pertanyaan makna kata『〜はどういう意味ですか？』."
   },
   {
-    "fragments": ["時間", "が", "あれば", "映画", "を", "見ます"],
-    "correctOrder": [0, 1, 2, 3, 4, 5],
-    "clue": "Kondisional: 〜ば + hasil."
+    "fragments": ["最近", "は", "やまださん", "は", "嬉しい", "そうですね", "ニコニコ", "は", "どういう", "意味", "ですか？"],
+    "correctOrder": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "clue": "Gunakan pola: keadaan + pendapat + menanyakan makna kata menggunakan『〜はどういう意味ですか？』."
   }
 ]
 

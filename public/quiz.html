@@ -247,13 +247,41 @@
 
             // === Fisher-Yates Shuffle Algorithm ===
             function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array;
-            }
+    // Buat salinan array untuk menghindari mutasi array asli
+    const shuffledArray = [...array];
+    
+    // Implementasi Fisher-Yates shuffle dengan validasi tambahan
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+        // Pastikan random number generator benar-benar random
+        const j = Math.floor(Math.random() * (i + 1));
+        
+        // Validasi index untuk memastikan tidak ada error
+        if (j >= 0 && j <= i && i < shuffledArray.length) {
+            // Swap elements dengan destructuring assignment
+            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+        }
+    }
+    
+    return shuffledArray;
+}
 
+// === Fungsi tambahan untuk shuffle yang lebih kuat ===
+function enhancedShuffle(array, iterations = 3) {
+    let result = [...array];
+    
+    // Lakukan shuffle beberapa kali untuk hasil yang lebih random
+    for (let iter = 0; iter < iterations; iter++) {
+        result = shuffleArray(result);
+    }
+    
+    // Pastikan hasil shuffle berbeda dari array asli (jika memungkinkan)
+    if (result.length > 1 && JSON.stringify(result) === JSON.stringify(array)) {
+        // Jika hasil sama dengan asli, lakukan shuffle sekali lagi
+        result = shuffleArray(result);
+    }
+    
+    return result;
+}
             // === Fetch Data and Start Game ===
           async function initializeGame() {
     try {
@@ -270,7 +298,7 @@
 }
 
             // === Load and Display Question ===
-            function loadQuestion(skipAnimation = false) {
+           function loadQuestion(skipAnimation = false) {
     if (!quizData[`level${currentLevel}`] || currentQuestionIndex >= quizData[`level${currentLevel}`].length) {
         endGame();
         return;
@@ -278,8 +306,11 @@
 
     resetBoard();
     const question = quizData[`level${currentLevel}`][currentQuestionIndex];
-    const fragments = shuffleArray([...question.fragments]);
-
+    
+    // PERKUAT SHUFFLE LOGIC DI SINI
+    // Gunakan enhanced shuffle untuk fragments
+    const fragments = enhancedShuffle([...question.fragments], 5); // 5 iterasi shuffle
+    
     levelTitle.textContent = `Level ${currentLevel}`;
     questionCounter.textContent = `Soal ${currentQuestionIndex + 1} / ${quizData[`level${currentLevel}`].length}`;
 
@@ -294,6 +325,7 @@
     timerSection.classList.add('hidden');
     answerArea.innerHTML = '';
 
+    // Shuffle posisi juga dengan enhanced shuffle
     const positions = [];
     const radius = Math.min(containerWidth, containerHeight) * 0.35;
 
@@ -308,7 +340,8 @@
         });
     }
 
-    shuffleArray(positions);
+    // PERKUAT SHUFFLE UNTUK POSISI JUGA
+    const shuffledPositions = enhancedShuffle(positions, 3);
 
     fragments.forEach((fragment, index) => {
         const bubble = document.createElement('div');
@@ -326,7 +359,7 @@
         bubble.offsetHeight;
 
         if (skipAnimation) {
-            // Skip animation, langsung tampilkan di answer area
+            // Skip animation, langsung tampilkan di answer area dengan urutan ter-shuffle
             const answerBlock = document.createElement('div');
             answerBlock.textContent = fragment;
             answerBlock.className = 'answer-block bg-gradient-to-r from-indigo-500 to-blue-500 p-3 text-white text-xl rounded-md font-bold cursor-move';
@@ -342,9 +375,9 @@
                 startTimer(timeLeft);
             }
         } else {
-            // Dengan animasi seperti biasa
+            // Dengan animasi seperti biasa menggunakan posisi yang sudah di-shuffle
             setTimeout(() => {
-                const pos = positions[index];
+                const pos = shuffledPositions[index];
                 gsap.to(bubble, {
                     duration: 0.6,
                     opacity: 1,
@@ -354,6 +387,7 @@
                     scale: 1,
                     ease: "power2.out",
                     onComplete: () => {
+                        // SHUFFLE LAGI SAAT PINDAH KE ANSWER AREA
                         const answerBlock = document.createElement('div');
                         answerBlock.textContent = fragment;
                         answerBlock.className = 'answer-block bg-gradient-to-r from-indigo-500 to-blue-500 p-3 text-white text-xl rounded-md font-bold cursor-move';
@@ -363,7 +397,21 @@
 
                         loadedFragments++;
 
+                        // Ketika semua fragment sudah loaded, shuffle urutan di answer area sekali lagi
                         if (loadedFragments === totalFragments) {
+                            // SHUFFLE FINAL: Acak urutan blok di answer area
+                            const allBlocks = Array.from(answerArea.children);
+                            const shuffledBlocks = enhancedShuffle(allBlocks, 2);
+                            
+                            // Update userAnswer sesuai urutan baru
+                            userAnswer = [];
+                            answerArea.innerHTML = '';
+                            
+                            shuffledBlocks.forEach(block => {
+                                answerArea.appendChild(block);
+                                userAnswer.push(block.textContent);
+                            });
+
                             gameContainer.style.display = 'none';
                             timerSection.classList.remove('hidden');
                             startTimer(timeLeft);
@@ -375,6 +423,40 @@
     });
 
     checkAnswerBtn.disabled = false;
+}
+
+// === Tambahan: Shuffle dengan Crypto API untuk randomness yang lebih kuat ===
+function cryptoShuffle(array) {
+    const shuffled = [...array];
+    
+    // Gunakan crypto.getRandomValues() jika tersedia untuk random yang lebih kuat
+    if (window.crypto && window.crypto.getRandomValues) {
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            // Buat random number dengan crypto API
+            const randomArray = new Uint32Array(1);
+            window.crypto.getRandomValues(randomArray);
+            const j = Math.floor((randomArray[0] / 4294967296) * (i + 1));
+            
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+    } else {
+        // Fallback ke Math.random jika crypto tidak tersedia
+        return shuffleArray(shuffled);
+    }
+    
+    return shuffled;
+}
+
+// === Gunakan crypto shuffle untuk hasil yang lebih random ===
+function superEnhancedShuffle(array) {
+    let result = [...array];
+    
+    // Kombinasi multiple shuffling methods
+    result = cryptoShuffle(result);           // Crypto-based shuffle
+    result = enhancedShuffle(result, 3);      // Multiple Fisher-Yates
+    result = cryptoShuffle(result);           // Final crypto shuffle
+    
+    return result;
 }
             function startTimer(duration) {
                 let time = duration;
