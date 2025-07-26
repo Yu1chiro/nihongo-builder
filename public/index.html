@@ -9,22 +9,23 @@
 <body class="bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center min-h-screen p-4">
     <div class="text-center max-w-4xl w-full">
         <h1 class="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
-            Welcome to Nihongo Builder
+            Welcome to Puzzle Nihongo!
         </h1>
-        <p class="text-lg text-gray-600 mb-5">Latih Kemampuanmu Dengan Mengurutkan Kalimat!</p>
-        <div class="flex justify-center mb-12">
-        <a href="/info" class="bg-green-600 hover:bg-green-700 text-white text-xl px-3 py-3 rounded-lg font-semibold">Lihat Statistik</a>
-        </div>
+        <p class="text-lg text-gray-600 mb-5">Latih Kemampuan Mengurutkan Kalimatmu Yuk!</p>
+        <div class="flex justify-center mb-12 gap-4">
+        <a href="/info" class="bg-green-600  hover:bg-green-700 text-white text-xl px-3 py-3 rounded-lg font-semibold">Lihat Statistik</a>
+        <button id="how-to-play-btn" class="bg-gradient-to-r from-violet-600 to-indigo-600 px-3 py-3 rounded-lg font-semibold text-white text-xl">Cara Bermain 🎮 </button>
+    </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Level 1 Card -->
             <a href="/quiz?level=1" class="group relative overflow-hidden level-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
                 <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div class="relative z-10 p-8">
                     <div class="w-20 h-20 mb-6 mx-auto flex items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-3xl font-bold shadow-md">
-                        1
+                        N5
                     </div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-2">1</h2>
-                    <p class="text-gray-600 mb-4">Level Pemula</p>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">N5</h2>
+                    <p class="text-gray-600 mb-4">Tata bahasa basic </p>
                     <div class="h-1 w-16 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto mb-4 rounded-full"></div>
                     <p class="text-sm text-gray-500">Kalimat sederhana dan kosakata dasar</p>
                 </div>
@@ -36,12 +37,12 @@
                 <div class="absolute inset-0 bg-gradient-to-br from-purple-100 to-pink-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div class="relative z-10 p-8">
                     <div class="w-20 h-20 mb-6 mx-auto flex items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white text-3xl font-bold shadow-md">
-                        2
+                        N4
                     </div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-2">2</h2>
-                    <p class="text-gray-600 mb-4">Level Menengah</p>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">N4</h2>
+                    <p class="text-gray-600 mb-4">N4</p>
                     <div class="h-1 w-16 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto mb-4 rounded-full"></div>
-                    <p class="text-sm text-gray-500">Kalimat lebih kompleks dengan konjugasi</p>
+                    <p class="text-sm text-gray-500">Tatabahasa Lanjutan sesuai JLPT</p>
                 </div>
                 <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </a>
@@ -51,47 +52,117 @@
                 <div class="absolute inset-0 bg-gradient-to-br from-pink-100 to-red-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div class="relative z-10 p-8">
                     <div class="w-20 h-20 mb-6 mx-auto flex items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-red-500 text-white text-3xl font-bold shadow-md">
-                        3
+                        N3
                     </div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-2">3</h2>
-                    <p class="text-gray-600 mb-4">Level Lanjutan</p>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">N3</h2>
+                    <p class="text-gray-600 mb-4">Tatabahasa Menengah Sesuai Dengan JLPT</p>
                     <div class="h-1 w-16 bg-gradient-to-r from-pink-400 to-red-400 mx-auto mb-4 rounded-full"></div>
-                    <p class="text-sm text-gray-500">～ましょうか？
-</p>
+                    
                 </div>
                 <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-500 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </a>
-            <a href="/quiz?level=4" class="group relative overflow-hidden level-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                <div class="absolute inset-0 bg-gradient-to-br from-pink-100 to-red-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="relative z-10 p-8">
-                    <div class="w-20 h-20 mb-6 mx-auto flex items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-red-500 text-white text-3xl font-bold shadow-md">
-                        4
-                    </div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-2">4</h2>
-                    <p class="text-gray-600 mb-4">Level Lanjutan</p>
-                    <div class="h-1 w-16 bg-gradient-to-r from-pink-400 to-red-400 mx-auto mb-4 rounded-full"></div>
-                    <p class="text-sm text-gray-500">～はどういう意味ですか？</p>
-                </div>
-                <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-500 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </a>
-            <a href="/quiz?level=5" class="group relative overflow-hidden level-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                <div class="absolute inset-0 bg-gradient-to-br from-pink-100 to-red-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="relative z-10 p-8">
-                    <div class="w-20 h-20 mb-6 mx-auto flex items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-red-500 text-white text-3xl font-bold shadow-md">
-                        5
-                    </div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-2">5</h2>
-                    <p class="text-gray-600 mb-4">Level Lanjutan</p>
-                    <div class="h-1 w-16 bg-gradient-to-r from-pink-400 to-red-400 mx-auto mb-4 rounded-full"></div>
-                    <p class="text-sm text-gray-500">～のとき</p>
-                </div>
-                <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-500 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </a>
+            
         </div>
 
         <div class="mt-12 text-gray-500">
             <p class="text-sm">Pilih level sesuai kemampuanmu. Kamu bisa mencoba level yang lebih tinggi setelah menyelesaikan level sebelumnya!</p>
         </div>
     </div>
+    <script>
+        function showHowToPlay() {
+    // Buat elemen modal
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4';
+    modal.innerHTML = `
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center border-b p-4">
+                <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                    <span class="text-2xl">📖</span> Cara Bermain Kuis
+                </h2>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Modal Content -->
+            <div class="p-6 overflow-y-auto">
+                <div class="text-left space-y-4">
+                    <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                        <h3 class="font-bold text-blue-800 mb-2">🎯 Tujuan Permainan</h3>
+                        <p class="text-sm text-gray-700">Susun fragmen kalimat dengan urutan yang benar sesuai dengan struktur kalimat yang tepat.</p>
+                    </div>
+                    
+                    <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                        <h3 class="font-bold text-green-800 mb-2">🎮 Cara Bermain</h3>
+                        <ol class="text-sm text-gray-700 space-y-2 list-decimal list-inside">
+                            <li>Fragmen kalimat akan muncul secara acak di area jawaban</li>
+                            <li><strong>Drag dan Drop:</strong> Seret fragmen untuk mengubah urutannya</li>
+                            <li><strong>Timer:</strong> Selesaikan sebelum waktu habis</li>
+                            <li>Tekan <strong>"Check Answer"</strong> untuk mengecek jawaban</li>
+                            <li>Gunakan tombol <strong>"💡 Clue"</strong> jika membutuhkan petunjuk</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
+                        <h3 class="font-bold text-yellow-800 mb-2">💡 Tips Bermain</h3>
+                        <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+                            <li>Baca semua fragmen terlebih dahulu</li>
+                            <li>Cari subjek, predikat, dan objek</li>
+                            <li>Perhatikan kata hubung (dan, atau, tetapi, dll)</li>
+                            <li>Gunakan clue jika kesulitan</li>
+                            <li>Jangan terburu-buru, pikirkan dengan tenang</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+                        <h3 class="font-bold text-red-800 mb-2">⚠️ Perhatian</h3>
+                        <p class="text-sm text-gray-700">
+                            Jika jawaban salah, Anda bisa mengulang soal yang sama. 
+                            Pastikan urutan fragmen sesuai dengan struktur kalimat yang benar!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="border-t p-4 flex justify-end">
+                <button id="confirm-modal" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-200">
+                    Mengerti!
+                </button>
+            </div>
+        </div>
+    `;
+    
+    // Tambahkan modal ke body
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden'; // Mencegah scroll di background
+    
+    // Fungsi untuk menutup modal
+    const closeModal = () => {
+        document.body.removeChild(modal);
+        document.body.style.overflow = '';
+    };
+    
+    // Event listeners untuk tombol close
+    modal.querySelector('#close-modal').addEventListener('click', closeModal);
+    modal.querySelector('#confirm-modal').addEventListener('click', closeModal);
+    
+    // Tutup modal ketika klik di luar konten modal
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+}
+
+// Event listener untuk tombol cara bermain
+const howToPlayBtn = document.getElementById('how-to-play-btn');
+if (howToPlayBtn) {
+    howToPlayBtn.addEventListener('click', showHowToPlay);
+}
+    </script>
 </body>
 </html>
