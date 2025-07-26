@@ -84,7 +84,90 @@
   "correctOrder": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
   "clue": "Gunakan urutan waktu dan tempat『〜とき』『〜で』untuk menyatakan konteks kegiatan."
 }
-
-]
-
+],
+ "level6": [
+    {
+      "fragments": ["昨日", "飲み物", "を", "買って", "きました"],
+      "correctOrder": [0, 1, 2, 3, 4],
+      "clue": "Kalimat menyatakan kegiatan membeli minuman kemarin. Gunakan struktur『昨日〜を買ってきました』."
+    },
+    {
+      "fragments": ["バリ料理", "を", "作って", "きました", "どうぞ", "食べて", "ください"],
+      "correctOrder": [0, 1, 2, 3, 4, 5, 6],
+      "clue": "Gabungkan aktivitas membuat masakan dan menawarkan makanan『〜を作ってきました』『どうぞ食べてください』."
+    },
+    {
+      "fragments": ["先週", "友達", "に", "酒", "を", "もらいました", "今", "ケーキ", "を", "買って", "きましたよ"],
+      "correctOrder": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "clue": "Gabungkan pemberian dari teman dan balasannya『先週友達に〜をもらいました』『今〜を買ってきましたよ』."
+    }
+  ],
+  "level7": [
+    {
+      "fragments": ["この", "スマホ", "は", "色", "が", "同じ", "けど", "どれが", "いいですか"],
+      "correctOrder": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      "clue": "Kalimat perbandingan benda yang serupa『このスマホは色が同じけど』『どれがいいですか』."
+    },
+    {
+      "fragments": ["さっき", "２", "ケーキ", "を", "買って", "きました", "チョコレート", "と", "ミルク", "味", "が", "あります", "どっちが", "好き", "ですか"],
+      "correctOrder": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+      "clue": "Kalimat menyatakan pilihan rasa makanan『さっき〜を買ってきました』『どっちが好きですか』."
+    },
+    {
+      "fragments": ["全部", "が", "美味しい", "けど", "お金", "が", "足りなくて", "どれが", "いいですか"],
+      "correctOrder": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      "clue": "Gunakan pola kontras karena keterbatasan『全部が美味しいけど、お金が足りなくて、どれがいいですか』."
+    }
+  ],
+  "level8": [
+    {
+      "fragments": ["オレンジ", "と", "チョコレート", "味", "が", "あります", "どっちが", "好き", "ですか", "オレンジ", "ほうが", "好き", "です"],
+      "correctOrder": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "clue": "Gunakan pola perbandingan preferensi『どっちが好きですか』『〜ほうが好きです』."
+    },
+    {
+      "fragments": ["２", "カード", "が", "ありました", "猫", "と", "犬", "どれが", "いい", "ですか", "猫", "ほうが", "いい", "ですよ"],
+      "correctOrder": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+      "clue": "Gunakan pola perbandingan pilihan『どれがいいですか』『〜ほうがいいですよ』dalam konteks benda dan hewan."
+    },
+    {
+      "fragments": ["ミルク", "と", "イチゴ", "どっち", "が", "入れます", "か", "ミルク", "ほうが", "いい", "です"],
+      "correctOrder": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "clue": "Kalimat perbandingan minuman『〜と〜どっちが入れますか』『〜ほうがいいです』."
+    }
+  ],
+  "level9": [
+    {
+      "fragments": ["何", "を", "飲み", "ますか", "何でも", "いい", "です"],
+      "correctOrder": [0, 1, 2, 3, 4, 5, 6],
+      "clue": "Tanya minuman, lalu beri jawaban netral dengan pola『何でもいいです』."
+    },
+    {
+      "fragments": ["お茶", "と", "ビール", "どれが", "好き", "ですか", "何でも", "いい", "ですよ"],
+      "correctOrder": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      "clue": "Tanya minuman favorit, lalu beri respon netral dengan『何でもいいですよ』."
+    },
+    {
+      "fragments": ["３", "色", "が", "あります", "どれが", "いい", "ですか", "みどり", "が", "いい", "です"],
+      "correctOrder": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "clue": "Pilih warna dari beberapa pilihan. Gunakan struktur『どれがいいですか』『〜がいいです』."
+    }
+  ],
+  "level10": [
+    {
+      "fragments": ["あの、", "この", "料理", "のり", "を", "入って", "ますか"],
+      "correctOrder": [0, 1, 2, 3, 4, 5, 6],
+      "clue": "Tanya minuman, lalu beri jawaban netral dengan pola『何でもいいです』."
+    },
+    {
+      "fragments": ["すみません", "この", "さしみ", "明日", "まで", "待ちますか"],
+      "correctOrder": [0, 1, 2, 3, 4, 5],
+      "clue": "Tanya minuman favorit, lalu beri respon netral dengan『何でもいいですよ』."
+    },
+    {
+      "fragments": ["今日", "は", "暑い", "そうですね", "ジュース", "を", "一緒", "に", "作り", "ましょうか"],
+      "correctOrder": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      "clue": "Pilih warna dari beberapa pilihan. Gunakan struktur『どれがいいですか』『〜がいいです』."
+    }
+  ]
 }

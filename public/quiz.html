@@ -491,11 +491,24 @@ function superEnhancedShuffle(array) {
                         clearInterval(timerInterval);
                         isGameOver = true;
                         Swal.fire({
-                            title: 'Waktu Habis!',
-                            text: 'Waktu untuk menjawab telah berakhir',
-                            icon: 'error',
-                            heightAuto: false,
-                            confirmButtonText: 'Coba Lagi'
+                            title: 'Oops! Waktu Habis!',
+                        text: 'Semngat Jangan Menyerah🔥🔥',
+                        icon: 'warning',
+                        heightAuto: false,
+                        confirmButtonText: 'Coba Lagi',
+                        background: '#fef2f2', // Light red background
+                        color: '#991b1b', // Dark red text
+                        iconColor: '#ef4444', // Red icon
+                        customClass: {
+                            popup: 'rounded-xl border-2 border-red-300 shadow-lg',
+                            title: 'text-3xl font-bold text-red-700',
+                            confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition-all duration-200 shadow-md hover:shadow-lg',
+                            container: 'bg-red-50'
+                        },
+                        buttonsStyling: false,
+                        showClass: {
+                            popup: 'animate__animated animate__headShake'
+                        }
                         }).then(() => {
                              window.location.href = `/quiz?level=${level}`;
                         });
@@ -580,8 +593,8 @@ function superEnhancedShuffle(array) {
                     correctAudio.play();
 
                     Swal.fire({
-                        title: '🎉 Benar!',
-                        text: 'Wah, kamu hebat! 💪 Pertahankan! Semangat, tinggal sedikit lagi! 🔥',
+                        title: 'Kelazz Boskuh!🔥',
+                        text: 'Jawaban Benar! Pertahankan terus!🔥🔥',
                         icon: 'success',
                         timer: 1500,
                         showConfirmButton: false,
@@ -615,8 +628,8 @@ function superEnhancedShuffle(array) {
                         answerArea.classList.remove('shake-error');
                     }, 500);
                     Swal.fire({
-                        title: '❌ Waduh Urutannya Salah Nih!',
-                        text: 'Opps! Coba cek lagi ya! Semangat!',
+                        title: '❌ Oops! Salah',
+                        text: 'Opps! Hampir Benar! Semangat!',
                         icon: 'error',
                         heightAuto: false,
                         confirmButtonText: 'Coba Lagi',
@@ -801,8 +814,8 @@ function superEnhancedShuffle(array) {
                         Next Level
                         </button>
                     ` : ''}
-                    <button id="playAgainBtn" class="bg-gradient-to-r from-blue-800 to-indigo-900 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex-1">
-                        🎮 Main Lagi
+                    <button id="playAgainBtn" class="bg-gradient-to-r from-green-500 to-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex-1">
+                        Main Lagi
                     </button>
                     <button id="statsBtn" class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex-1">
                         Lihat Statistik
