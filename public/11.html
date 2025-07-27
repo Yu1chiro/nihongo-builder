@@ -7,7 +7,112 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center min-h-screen p-4">
-    <div class="text-center max-w-4xl w-full">
+      <!-- Navbar -->
+    <nav class="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <h1 class="text-2xl font-bold text-blue-600">いろどり</h1>
+                </div>
+                
+                <!-- Hamburger Button -->
+                <button id="hamburger" class="md:hidden relative w-8 h-8 flex flex-col justify-center items-center space-y-1.5 z-50">
+                    <span id="line1" class="block w-6 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out"></span>
+                    <span id="line2" class="block w-6 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out"></span>
+                    <span id="line3" class="block w-6 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out"></div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-40 transform translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="flex flex-col h-full pt-20 px-6">
+            <!-- Menu Items -->
+            <div class="space-y-1">
+                <a href="/" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors duration-200 font-semibold">
+                    第１０課
+                </a>
+                <hr class="border-1 border-gray-600">
+                <a href="/11" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors duration-200 font-semibold">
+                    第１１課
+                </a>
+                  <hr class="border-1 border-gray-600">
+                <a href="/12" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors duration-200 font-semibold">
+                    第１２課
+                </a>
+                  <hr class="border-1 border-gray-600">
+            </div>
+            
+        </div>
+    </div>
+ <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+        const line1 = document.getElementById('line1');
+        const line2 = document.getElementById('line2');
+        const line3 = document.getElementById('line3');
+        
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            
+            if (isMenuOpen) {
+                // Open menu
+                mobileMenu.classList.remove('translate-x-full');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                
+                // Animate hamburger to X
+                line1.style.transform = 'rotate(45deg) translate(6px, 6px)';
+                line2.style.opacity = '0';
+                line3.style.transform = 'rotate(-45deg) translate(6px, -6px)';
+                
+                // Prevent body scroll
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Close menu
+                mobileMenu.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                
+                // Reset hamburger
+                line1.style.transform = 'none';
+                line2.style.opacity = '1';
+                line3.style.transform = 'none';
+                
+                // Restore body scroll
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Event listeners
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+        
+        // Close menu when clicking on menu items
+        const menuItems = mobileMenu.querySelectorAll('a');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (isMenuOpen) {
+                    toggleMenu();
+                }
+            });
+        });
+        
+        // Handle escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isMenuOpen) {
+                toggleMenu();
+            }
+        });
+    </script>   
+    
+    <div class="text-center max-w-4xl w-full py-20">
         <h1 class="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
           第１１課
         </h1>

@@ -15,11 +15,18 @@ app.use('/data', express.static(path.join(__dirname, 'data')));
 app.get('/quiz', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'quiz.html'));
 });
+app.get('/404', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', '404.html'));
+});
 app.get('/11', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', '11.html'));
 });
 app.get('/info', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'info.html'));
+});
+// Middleware untuk menangani 404 (halaman tidak ditemukan)
+app.use((req, res) => {
+    res.redirect('/404');
 });
 
 app.listen(PORT, () => {
