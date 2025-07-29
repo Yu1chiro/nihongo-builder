@@ -21,6 +21,9 @@ app.get('/404', (req, res) => {
 app.get('/11', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', '11.html'));
 });
+app.get('/12', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', '12.html'));
+});
 app.get('/info', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'info.html'));
 });
