@@ -369,26 +369,29 @@
   
     "level18": [
     {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    }
-  ],
-    "level19": [
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    }
+    "fragments": ["この","ボタン","を","押す","と","コピー","が","始まります"],
+    "correctOrder": [0,1,2,3,4,5,6,7],
+    "clue": "コピー"
+  },
+  {
+    "fragments": ["この","スタート","を","押す","と","パソコン","が","動きます"],
+    "correctOrder": [0,1,2,3,4,5,6,7],
+    "clue": "スタート"
+  },
+  {
+    "fragments": ["手","を","かざす","と","水","が","流れます"],
+    "correctOrder": [0,1,2,3,4,5,6],
+    "clue": "センサー"
+  },
+  {
+    "fragments": ["ドア","を","開ける","と","音","が","鳴ります"],
+    "correctOrder": [0,1,2,3,4,5,6],
+    "clue": "ドア"
+  },
+  {
+    "fragments": ["カード","を","入れる","と","ロッカー","が","開きます"],
+    "correctOrder": [0,1,2,3,4,5,6],
+    "clue": "ロッカー"
+  }
   ]
 }
