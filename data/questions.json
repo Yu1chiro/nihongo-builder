@@ -342,5 +342,53 @@
       "correctOrder": [0,1,2,3,4,5,6],
       "clue": "先週"
     }
+  ],
+  
+    "level17": [
+    {
+      "fragments": ["この","資料","を","したい","とき","どう","すれば","いいですか？"],
+      "correctOrder": [0,1,2,3,4,5,6,7],
+      "clue": "この資料"
+    },
+    {
+      "fragments": ["ゲーム","を","したい","とき","どう","すれば","いいですか？"],
+      "correctOrder": [0,1,2,3,4,5,6],
+      "clue": "ゲーム"
+    },
+    {
+      "fragments": ["お酒","を","買いたい","とき","どこ","で","買いますか"],
+      "correctOrder": [0,1,2,3,4,5,6],
+      "clue": "お酒"
+    },
+    {
+      "fragments": ["海","で","泳ぎたい","とき","何","か","待って","なければ","なりませんか？"],
+      "correctOrder": [0,1,2,3,4,5,6,7,8],
+      "clue": "海"
+    }
+  ],
+  
+    "level18": [
+    {
+      "fragments": [""],
+      "correctOrder": [],
+      "clue": ""
+    },
+    {
+      "fragments": [""],
+      "correctOrder": [],
+      "clue": ""
+    }
+  ],
+    "level19": [
+    {
+      "fragments": [""],
+      "correctOrder": [],
+      "clue": ""
+    },
+    {
+      "fragments": [""],
+      "correctOrder": [],
+      "clue": ""
+    }
   ]
 }
