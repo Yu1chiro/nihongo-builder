@@ -27,6 +27,21 @@ app.get('/12', (req, res) => {
 app.get('/13', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', '13.html'));
 });
+app.get('/14', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', '14.html'));
+});
+app.get('/15', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', '15.html'));
+});
+app.get('/16', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', '16.html'));
+});
+app.get('/17', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', '17.html'));
+});
+app.get('/18', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', '18.html'));
+});
 app.get('/info', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'info.html'));
 });
