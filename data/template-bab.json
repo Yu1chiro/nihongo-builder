@@ -1,114 +1,86 @@
 {
-    "level20": [
-    {
-      "fragments": ["病気","で","学校","へ","行きません"],
-      "correctOrder": [0,1,2,3,4],
-      "clue": "病気"
-    },
-    {
-      "fragments": ["仕事","が","大変","で","毎日","残業","を","します"],
-      "correctOrder": [0,1,2,3,4,5,6,7],
-      "clue": "仕事"
-    },
-    {
-      "fragments": ["部屋","が","静か","で","勉強","が","しやすい","です"],
-      "correctOrder": [0,1,2,3,4,5,6,7],
-      "clue": "部屋"
-    },
-    {
-      "fragments": ["人気","で","多く","の","人","が","知っています"],
-      "correctOrder": [0,1,2,3,4,5,6],
-      "clue": "人気"
-    },
-    {
-      "fragments": ["この","物","が","便利","で","毎日","は","良く","使われています"],
-      "correctOrder": [0,1,2,3,4,5,6,7,8],
-      "clue": "この物"
-    }
-  ],
-  
-    "level21": [
-    {
-      "fragments": ["体調","が","悪い","です","それで","病院","へ","行きます"],
-      "correctOrder": [0,1,2,3,4,5,6,7],
-      "clue": "体調が"
-    },
-    {
-      "fragments": ["電車","が","来ませんでした","それで","遅刻","しました"],
-      "correctOrder": [0,1,2,3,4,5],
-      "clue": "電車が"
-    },
-    {
-      "fragments": ["雨","が","降っています","それで","試合","が","中止","されました"],
-      "correctOrder": [0,1,2,3,4,5,6,7],
-      "clue": "雨が"
-    },
-    {
-      "fragments": ["試験","が","あって","それで","イベント","へ","来ませんでした"],
-      "correctOrder": [0,1,2,3,4,5,6],
-      "clue": "試験が"
-    },
-    {
-      "fragments": ["地震","が","あって","それで","動物","が","逃げました"],
-      "correctOrder": [0,1,2,3,4,5,6],
-      "clue": "地震が"
-    }
-  ],
-    "level22": [
-    {
-      "fragments": ["","","",""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": ["","","",""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    }
-  ],
-    "level23": [
-    {
-      "fragments": ["","","",""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": ["","","",""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    }
-  ],
     "level24": [
+    {
+      "fragments": ["昨日、","学校","へ","行けない","んです"],
+      "correctOrder": [0,1,2,3,4],
+      "clue": "明日"
+    },
+    {
+      "fragments": ["あの、","お腹が","痛くて、","気持ち","が","悪い","んです"],
+      "correctOrder": [0,1,2,3,4,5,6],
+      "clue": "あの、"
+    },
+    {
+      "fragments": ["熱","が","まだ","下げる","んです"],
+      "correctOrder": [0,1,2,3,4],
+      "clue": "熱"
+    },
+    {
+      "fragments": ["試験","の","ため、","勉強","する","んです"],
+      "correctOrder": [0,1,2,3,4,5],
+      "clue": "試験"
+    },
+    {
+      "fragments": ["明日、","バス","を","乗る","と","思う","んです"],
+      "correctOrder": [0,1,2,3,4,5,6],
+      "clue": "明日、"
+    }
+  ],
+  "level25": [
+    {
+      "fragments": ["","","",""],
+      "correctOrder": [],
+      "clue": ""
+    },
+    {
+      "fragments": [""],
+      "correctOrder": [],
+      "clue": ""
+    },
+    {
+      "fragments": ["","","",""],
+      "correctOrder": [],
+      "clue": ""
+    },
+    {
+      "fragments": [""],
+      "correctOrder": [],
+      "clue": ""
+    },
+    {
+      "fragments": [""],
+      "correctOrder": [],
+      "clue": ""
+    }
+  ],
+  "level26": [
+    {
+      "fragments": ["","","",""],
+      "correctOrder": [],
+      "clue": ""
+    },
+    {
+      "fragments": [""],
+      "correctOrder": [],
+      "clue": ""
+    },
+    {
+      "fragments": ["","","",""],
+      "correctOrder": [],
+      "clue": ""
+    },
+    {
+      "fragments": [""],
+      "correctOrder": [],
+      "clue": ""
+    },
+    {
+      "fragments": [""],
+      "correctOrder": [],
+      "clue": ""
+    }
+  ],
+  "level27": [
     {
       "fragments": ["","","",""],
       "correctOrder": [],
