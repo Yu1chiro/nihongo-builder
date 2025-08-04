@@ -1,56 +1,30 @@
 {
-    "level24": [
-    {
-      "fragments": ["昨日、","学校","へ","行けない","んです"],
-      "correctOrder": [0,1,2,3,4],
-      "clue": "明日"
-    },
-    {
-      "fragments": ["あの、","お腹が","痛くて、","気持ち","が","悪い","んです"],
-      "correctOrder": [0,1,2,3,4,5,6],
-      "clue": "あの、"
-    },
-    {
-      "fragments": ["熱","が","まだ","下げる","んです"],
-      "correctOrder": [0,1,2,3,4],
-      "clue": "熱"
-    },
-    {
-      "fragments": ["試験","の","ため、","勉強","する","んです"],
-      "correctOrder": [0,1,2,3,4,5],
-      "clue": "試験"
-    },
-    {
-      "fragments": ["明日、","バス","を","乗る","と","思う","んです"],
-      "correctOrder": [0,1,2,3,4,5,6],
-      "clue": "明日、"
-    }
-  ],
+    
   "level25": [
     {
-      "fragments": ["","","",""],
-      "correctOrder": [],
-      "clue": ""
+      "fragments": ["海","が","危ない","から、","泳げないで","ください"],
+      "correctOrder": [0,1,2,3,4],
+      "clue": "海"
     },
     {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
+      "fragments": ["この","食べ物","が","悪い","から、","食べないで","ください"],
+      "correctOrder": [0,1,2,3,4,5,6],
+      "clue": "この"
     },
     {
-      "fragments": ["","","",""],
-      "correctOrder": [],
-      "clue": ""
+      "fragments": ["雨","が","降る","から、","家","で","出ないで","ください"],
+      "correctOrder": [0,1,2,3,4,5,6,7],
+      "clue": "雨"
     },
     {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
+      "fragments": ["地震","が","あるから、","車","を","乗らないで","ください"],
+      "correctOrder": [0,1,2,3,4,5,6],
+      "clue": "地震"
     },
     {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
+      "fragments": ["子供","が","いる","から","タバコ","を","吸わないで","ください"],
+      "correctOrder": [0,1,2,3,4,5,6,7],
+      "clue": "子供"
     }
   ],
   "level26": [
