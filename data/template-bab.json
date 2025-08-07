@@ -1,85 +1,59 @@
 {
-    
-  "level29": [
-    {
-    "fragments": ["学校","へ","行く","ときに","友だち","に","会いました"],
-    "correctOrder": [0,1,2,3,4,5,6],
-    "clue": "学校"
-  },
-  {
-    "fragments": ["明日、","試験","を","受ける","ときに","鉛筆","を","忘れない","でください"],
-    "correctOrder": [0,1,2,3,4,5,6,7,8],
-    "clue": "明日"
-  },
-  {
-    "fragments": ["バス","を","降りる","ときに","足","に","気をつけて","ください"],
-    "correctOrder": [0,1,2,3,4,5,6,7],
-    "clue": "バス"
-  },
-  {
-    "fragments": ["食事","を","する","ときに","手","を","洗って","ください"],
-    "correctOrder": [0,1,2,3,4,5,6,7],
-    "clue": "食事"
-  },
-  {
-    "fragments": ["寝る","ときに","電気","を","消してください"],
-    "correctOrder": [0,1,2,3,4],
-    "clue": "寝る"
-  }
-  ],
-  "level30": [
-    {
-      "fragments": ["","","",""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": ["","","",""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    }
-  ],
-  "level31": [
-    {
-      "fragments": ["","","",""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": ["","","",""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    },
-    {
-      "fragments": [""],
-      "correctOrder": [],
-      "clue": ""
-    }
-  ]
+ 
+"level40": [
+   {
+   "fragments": ["毎日、","野菜","を","食べる","ように","しています"],
+   "correctOrder": [0,1,2,3,4,5],
+   "clue": "毎日"
+ },
+ {
+   "fragments": ["早く","寝る","ように","しています"],
+   "correctOrder": [0,1,2,3],
+   "clue": "早く"
+ },
+ {
+   "fragments": ["できるだけ、","運動","する","ように","しています"],
+   "correctOrder": [0,1,2,3,4],
+   "clue": "できるだけ"
+ },
+ {
+   "fragments": ["健康","の","ため","に、","水","を","たくさん","飲む","ように","しています"],
+   "correctOrder": [0,1,2,3,4,5,6,7,8,9],
+   "clue": "健康"
+ },
+ {
+   "fragments": ["毎朝、","ストレッチ","する","ように","しています"],
+   "correctOrder": [0,1,2,3,4],
+   "clue": "毎朝"
+ }
+],
+
+"level41": [
+   {
+   "fragments": ["夜","遅く","まで","起きない","ように","しています"],
+   "correctOrder": [0,1,2,3,4,5],
+   "clue": "夜"
+ },
+ {
+   "fragments": ["お酒","を","飲み","すぎない","ように","しています"],
+   "correctOrder": [0,1,2,3,4,5],
+   "clue": "お酒"
+ },
+ {
+   "fragments": ["ファストフード","を","食べない","ように","しています"],
+   "correctOrder": [0,1,2,3,4],
+   "clue": "ファストフード"
+ },
+ {
+   "fragments": ["ストレス","を","ためない","ように","しています"],
+   "correctOrder": [0,1,2,3,4],
+   "clue": "ストレス"
+ },
+ {
+   "fragments": ["スマホ","を","見","すぎない","ように","しています"],
+   "correctOrder": [0,1,2,3,4,5],
+   "clue": "スマホ"
+ }
+]
   
 }
